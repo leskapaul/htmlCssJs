@@ -1,0 +1,57 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+
+	<script type="text/javascript" src="js/jquery-ui-1.11.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="visualsearch/vendor/underscore-1.5.2.js"></script>
+	<script type="text/javascript" src="visualsearch/vendor/backbone-1.1.0.js"></script>
+	<script type="text/javascript" src="visualsearch/build/visualsearch.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.11.2/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="visualsearch/build/visualsearch-datauri.css" />
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var myvs = VS.init({
+				container	: $(".vs"),
+				query		: "",
+				callbacks	: {
+					search		: function(query, searchCollection){
+						alert('query: ' + query + '\nsearchCollection: ' + searchCollection);
+					},
+					facetMatches	: function(callback){
+						callback(["req #", "last name", "first name", "city"]);
+					},
+					valueMatches	: function(facet, searchTerm, callback){
+						switch(facet) {
+							case "req #":
+									callback(["A123", "A321", "B456", "C789"]);
+								break;
+							case "last name":
+									callback(["Adams", "Kennedy", "Lincoln", "Roose velt", "Obama"]);
+								break;
+							case "first name":
+									callback(["John", "John F.", "Abraham", "Franklin D.", "Barack"]);
+								break;
+							case "city":
+									callback(["Boston", "New York", "Washington D.C.", "Atlanta"]);
+								break;
+						}
+					}
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<h3>Let's have some fun with visualsearch.js!</h3>
+
+	<div class="vs"></div>
+	
+	<p>One drawback, depending on how one looks at it, is that autocomplete works first against facets and then values.  
+	One might imagine an alternative in which autocomplete works against both at the same time.</p>
+</body>
+</html>
